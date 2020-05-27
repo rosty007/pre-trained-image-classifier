@@ -68,10 +68,13 @@ def classify_images(images_dir, results_dic, model):
     # images_dir, results_dic, model
     for image_filename in results_dic.keys():
         test_image = images_dir + "/" +image_filename
+        # get the classifier label, lower, and strip it
         image_classification = classifier(test_image, model).lower().strip()
+        # append the classifier label to the list, then it will be at index 1 in the list
         results_dic[image_filename].append(image_classification)
         
-        # if pet_label in classification label, set match to 1 else 0
+        # if pet_label in classification label, set match to 1 else 0 (pet_label is at index 0 of the list)        
         pet_label = results_dic[image_filename][0]
+        #append 1 if pet_label in classifier label. if not append 0
         results_dic[image_filename].append(1 if pet_label in image_classification else 0)
     return  results_dic

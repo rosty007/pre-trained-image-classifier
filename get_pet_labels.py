@@ -42,7 +42,9 @@ def get_pet_labels(image_dir):
     """
     results_dic = {}
     for image_file_name in listdir(image_dir):
+        # lower, strip, then split by "_" and remove the last part and keep the rest of the string with rsplit
         pet_label = image_file_name.lower().strip().rsplit('_', 1)[0]
+        # replace "_" by space to get the required format
         results_dic[image_file_name] = [pet_label.replace("_", " ")]
     # Replace None with the results_dic dictionary that you created with this
     # function

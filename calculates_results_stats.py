@@ -71,36 +71,48 @@ def calculates_results_stats(results_dic):
     # Replace None with the results_stats_dic dictionary that you created with 
     # this function 
     results_stats_dic = {}
+    # the number of images is the length of results_dic
     results_stats_dic['n_images'] = len(results_dic)    
-    
+    # the number of dog images is the number of 1 at index 3 in results_dic values(lists)
     results_stats_dic['n_dogs_img'] = sum([dog[3] for _, dog in results_dic.items()
                                            ])
+    # the number of not dog images is the number of images (total) minus number of dog images
     results_stats_dic['n_notdogs_img'] = results_stats_dic['n_images'] - \
                                          results_stats_dic['n_dogs_img']
-
+    # the number of matchs is the number of 1 at index 2 in results_dic values(lists)
     results_stats_dic['n_match'] = sum([dog[2] for _, dog in results_dic.items()
                                         ])
+    # the number of correct dogs is the number of element in results_dic where value at
+    # index 3 == value at index 4 == 1 in results_dic values(lists)
     results_stats_dic['n_correct_dogs'] = sum([dog[4] for _, dog in results_dic.
                                                items() if(dog[4] == dog[3] and
                                                           dog[4] == 1)])
-
+    
+    # the number of correct not dogs is the number of element in results_dic where value at
+    # index 3 == value at index 4 == 0 in results_dic values(lists)
     results_stats_dic['n_correct_notdogs'] = sum([1 for _, dog in results_dic.
                                                   items() if(dog[4] == dog[3] and
                                                              dog[4] == 0)])
-
+    
+    # the number of correct dogs breeds is the number of element in results_dic where value at
+    # index 2 == value at index 3 == 1 in results_dic values(lists)
     results_stats_dic['n_correct_breed'] = sum([dog[2] for _, dog in results_dic.
                                                 items() if(dog[3] == 1 and
                                                            dog[2] == 1)])
-
+    
+    # percentage of match is the number of matchs divided by the number of images
     results_stats_dic['pct_match'] = results_stats_dic['n_match'] * 100 / \
                                      results_stats_dic['n_images']
-
+    # percentage of correct dogs is the number of correct dogs divided by number of dogs
     results_stats_dic['pct_correct_dogs'] = results_stats_dic['n_correct_dogs'] * 100 / \
                                             results_stats_dic['n_dogs_img']
-
+    
+    # percentage of correct dog breeds is the number of correct dog breeds divided by number of dogs
     results_stats_dic['pct_correct_breed'] = results_stats_dic['n_correct_breed'] * 100\
                                              / results_stats_dic['n_dogs_img']
-
+    
+    # percentage of coorect not dogs is 0 if all image are dogs
+    # else it is the number of correct not dogs divided by number of dogs
     results_stats_dic['pct_correct_notdogs'] = 0 if results_stats_dic['n_notdogs_img'] == 0 \
                                                  else results_stats_dic['n_correct_notdogs'] \
                                                       * 100 / results_stats_dic['n_notdogs_img']
