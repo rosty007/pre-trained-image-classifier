@@ -18,6 +18,7 @@
 ##
 # Imports python modules
 from os import listdir
+from os.path import splitext
 
 # TODO 2: Define get_pet_labels function below please be certain to replace None
 #       in the return statement with results_dic dictionary that you create 
@@ -42,10 +43,11 @@ def get_pet_labels(image_dir):
     """
     results_dic = {}
     for image_file_name in listdir(image_dir):
-        # lower, strip, then split by "_" and remove the last part and keep the rest of the string with rsplit
-        pet_label = image_file_name.lower().strip().rsplit('_', 1)[0]
-        # replace "_" by space to get the required format
-        results_dic[image_file_name] = [pet_label.replace("_", " ")]
+        # remove extension to image_file_name
+        base_image_file_name = splitext(image_file_name)[0]
+        if not image_file_name.startswith("."):
+            pet_label = base_image_file_name.lower().strip().rsplit('_', 1)[0]
+            results_dic[image_file_name] = [pet_label.replace("_", " ")]
     # Replace None with the results_dic dictionary that you created with this
     # function
     return results_dic
